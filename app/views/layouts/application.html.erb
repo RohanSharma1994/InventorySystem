@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>InventorySystem</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+ <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="/" class="navbar-brand">
+          IMS
+          </a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav">
+            
+            <li>
+              <a href="/help">Help</a>
+            </li>
+            <li>
+              <a href="/contact">Contact</a>
+            </li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">Management Tools<span class="caret"></span></a>
+              <ul class="dropdown-menu" aria-labelledby="download">
+                <li><a href="/customer">Customer Management</a></li>
+                <li><a href="/user">User Management</a></li>
+                <li class="divider"></li>
+                <li><a href="/item">Inventory Management</a></li>
+                <li><a href="/sale">Sales Management</a></li>
+                <li class="divider"></li>
+              </ul>
+            </li>
+          </ul>
+          <% if session['logged_in'] == 1 then %>
+          <form class="navbar-form navbar-right" method="post" action="/user/logout">
+            <button type="submit" class="btn btn-danger">Log Out</button>
+            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+          </form>
+          <% end %>
+             <form class="navbar-form navbar-right" role="search">
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                      </div>
+                      <button type="submit" class="btn btn-warning">Submit</button>
+                    </form>
+
+        </div>
+
+      </div>
+
+    </div>
+		<%= yield %>
+
+</body>
+</html>

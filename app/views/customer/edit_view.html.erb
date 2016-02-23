@@ -1,0 +1,50 @@
+ <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+ <form class="form-horizontal" method="post" action="/customer/edit">
+                <fieldset>
+                  <center><legend>Edit an existing customer</legend></center>
+                  <div class="form-group">
+                    <div class="col-lg-10 col-md-offset-1">
+                      <input type="text" class="form-control" placeholder="First Name" name="first_name" value="<%= @customer.first_name %>">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-10 col-md-offset-1">
+                      <input type="text" class="form-control" placeholder="Last Name" name="last_name" value="<%= @customer.last_name %>">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-10 col-md-offset-1">
+                      <input type="text" class="form-control" placeholder="Address" name="address" value="<%= @customer.address %>">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-10 col-md-offset-1">
+                      <input type="text" class="form-control" placeholder="Phone" name="phone" value="<%= @customer.phone %>">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-10 col-md-offset-1">
+                      <input type="text" class="form-control" placeholder="Mobile" name="mobile" value="<%= @customer.mobile %>">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-10 col-md-offset-1">
+                      <input type="text" class="form-control" placeholder="Email" name="email" value="<%= @customer.email %>">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-10 col-md-offset-1">
+                      <textarea name="notes" placeholder="Notes"><%= @customer.notes %></textarea>
+                    </div>
+                  </div>
+                  
+                  <input type="hidden" name="id" value="<%= @customer.id %>"/>
+                      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+
+                  <div class="form-group">
+                      <center><button type="submit" class="btn btn-info">Update details</a></button></center>
+                  </div>
+                </fieldset>
+              </form>

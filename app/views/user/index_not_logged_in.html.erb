@@ -1,0 +1,35 @@
+           <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+        <script type="text/javascript">
+        function deleteMessage() {
+          var element = document.getElementById('message');
+          element.remove();
+        }
+        </script>
+        <div class="row">
+          <div class="col-md-4 col-md-offset-4">
+            <div class="well bs-component">
+              <form class="form-horizontal" method="post" action="/user/login">
+                <fieldset>
+                  <center><legend>Log In</legend></center>
+                  <div class="form-group">
+                    <div class="col-lg-10 col-md-offset-1">
+                      <input type="text" class="form-control" id="inputEmail" placeholder="Email" name="email" onfocus="deleteMessage();">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-10 col-md-offset-1">
+                      <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password" onfocus="deleteMessage();">
+                    </div>
+                  </div>
+                  
+                  <center><p class="text-danger" id="message">Please log in to continue</p></center>
+                      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+                  <div class="form-group">
+                      <center><button type="submit" class="btn btn-info">Log In</a></button></center>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+          </div>

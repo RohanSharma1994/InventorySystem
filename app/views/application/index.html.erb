@@ -1,0 +1,33 @@
+          <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+       <% if session['logged_in'] != 1 then %>
+        <div class="row">
+          <div class="col-md-4 col-md-offset-4">
+            <div class="well bs-component">
+              <form class="form-horizontal" method="post" action="/user/login">
+                <fieldset>
+                  <center><legend>Log In</legend></center>
+                  <div class="form-group">
+                    <div class="col-lg-10 col-md-offset-1">
+                      <input type="text" class="form-control" id="inputEmail" placeholder="Email" name="email">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-10 col-md-offset-1">
+                      <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password">
+                    </div>
+                  </div>
+                  
+                      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+
+                  <div class="form-group">
+                      <center><button type="submit" class="btn btn-info">Log In</a></button></center>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+          </div>
+          <% else %>
+            <center>Logged in items here</center>
+          <% end %>

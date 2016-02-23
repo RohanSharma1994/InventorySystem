@@ -1,0 +1,18 @@
+<h1>Edit existing item</h1>
+<form method="post" action="/item/edit" enctype="multipart/form-data">
+	<input type="text" name="name" placeholder="Item Name" value="<%= @item.name%>"/><br />
+	<textarea name="description" placeholder="Description"><%= @item.description %></textarea><br />
+	<input type="text" name="quantity" placeholder="Quantity" value="<%= @item.quantity %>a"/><br />
+	<input type="text" name="item_number_1" placeholder="Item Number 1" value=" <%= @item.item_number_one %>"/><br/>
+	<input type="text" name="item_number_2" placeholder="Item Number 2" value=" <%= @item.item_number_two %>"/><br/>
+	<input type="text" name="price" placeholder="Price" value="<%= @item.price %>"/><br/>
+	<input type="text" name="retail_price" placeholder="Retail Price" value=" <%= @item.retail_price%>"/><br/>
+	<textarea name="notes" placeholder="Notes"><%= @item.notes %></textarea>
+	<br/>
+	<h2> Current Image </h2>
+	<img src = "/uploads/<%= @item.photo_path %>" width="500px" height="500px"/><br/>
+	<input type="file" name="pic" accept="image/*" name="" />
+	<input type="hidden" name="id" value="<%= @item.id %>" />
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+	<input type="submit"/>
+</form>

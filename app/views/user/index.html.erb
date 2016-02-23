@@ -1,0 +1,146 @@
+ <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+ <script type="text/javascript">
+ 	setTimeout(function(){
+  		$('#message').remove();
+	}, 3000);
+ </script>
+<% curr_user = User.find(session[:user_id]) %>
+<% if curr_user.admin == 'Y' then %>
+ <center><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add User</button></center>
+ <% end %>
+ 		<div id="message">
+       <center><p class="text-info"><%=flash[:message]%></p></center>
+       </div>
+ <!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <center><h4 class="modal-title">Add a new user to the database</h4></center>
+      </div>
+
+      <div class="modal-body">
+        <form class="form-horizontal" method="post" action="/user">
+                <fieldset>
+                  <div class="form-group">
+                    <div class="col-lg-10 col-md-offset-1">
+                      <input type="text" class="form-control" placeholder="Email" name="email">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-10 col-md-offset-1">
+                      <input type="password" class="form-control" placeholder="Password" name="password">
+                    </div>
+                  </div>
+                 <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+
+                  <div class="form-group">
+                      <center><button type="submit" class="btn btn-info">Add</button></center>
+                  </div>
+                </fieldset>
+              </form>
+      </div>
+      <div class="modal-footer">
+        <center><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></center>
+      </div>
+    </div>
+
+  </div>
+</div>
+<br/><br/><br/>
+<table class="table table-striped table-hover ">
+                <thead>
+                  <tr>
+                    <th>Email</th>
+                    <% curr_user = User.find(session[:user_id])%>
+                    <% if curr_user.admin == 'Y' then %>
+                    <th>Edit/Delete</th>
+                    <% end %>
+                  </tr>
+                </thead>
+                <tbody>
+<% for user in @users do %>
+	<tr>
+		<td><%= user.email %></td>
+		<% if curr_user.admin == 'Y' and (user.id != curr_user.id) then %>
+		<td><% if user.id == session[:user_id] then %><button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModal-<%=user.id%>">Edit</button><% end %><button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal-<%=user.id%>-delete">Delete</button></td>
+    <% else %>
+    <td><% if user.id == session[:user_id] then %><button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModal-<%=user.id%>">Edit</button><% end %></td>
+    	<% end %>
+
+	</tr>
+
+<% end %>
+ </tbody>
+</table>
+<% @user = User.find(session[:user_id]) %>
+<div id="myModal-<%=session[:user_id]%>" class="modal fade" role="dialog" style="background-color:white;">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content-customer">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <center><h4 class="modal-title">Change your password</h4></center>
+      </div>
+
+      <div class="modal-body">
+        <form class="form-horizontal" method="post" action="/user/edit">
+                <fieldset>
+                    <div class="form-group">
+                    <div class="col-lg-10 col-md-offset-1">
+                      <input type="text" class="form-control" placeholder="Email" name="email" value="<%=@user.email%>" disabled>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-10 col-md-offset-1">
+                      <input type="password" class="form-control" placeholder="Password" name="password" value="<%=@user.password%>">
+                    </div>
+                  </div>
+                  
+                  <input type="hidden" name="id" value="<%= session[:user_id] %>"/>
+
+                      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+
+                  <div class="form-group">
+                      <center><button type="submit" class="btn btn-info">Update User</button></center>
+                  </div>
+                </fieldset>
+              </form>
+      </div>
+      <div class="modal-footer">
+        <center><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></center>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% for user in @users do %>
+    <div id="myModal-<%=user.id%>-delete" class="modal fade" role="dialog" style="background-color:white;">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content-customer">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <center><h4 class="modal-title">Delete <%= user.email %>?</h4></center>
+      </div>
+
+      <div class="modal-body">
+        <center><h3>Are you sure?</h3></center><br/>
+        <center><a href="/user/delete/<%=user.id%>"><button type="button" class="btn btn-danger">Yes</button></a>
+            <button type="button" class="btn btn-default" data-dismiss="modal">No</button></center>
+      </div>
+      <div class="modal-footer">
+        <center><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></center>
+      </div>
+    </div>
+
+  </div>
+</div>
+<% end %>
