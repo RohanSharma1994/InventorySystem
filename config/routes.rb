@@ -48,6 +48,12 @@ Rails.application.routes.draw do
 
   get 'user/logged_out', to: 'user#index_not_logged_in'
 
+  get 'sale/view/:id', to: 'sale#view_sale'
+
+  get 'sale/complete/:id', to: 'sale#complete_sale'
+
+  get 'daybook', to: 'sale#daybook'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

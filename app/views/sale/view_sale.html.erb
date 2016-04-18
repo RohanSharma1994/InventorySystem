@@ -1,0 +1,47 @@
+<br/><br/><br/>
+<h3>Sale summary</h3>
+<table class="table table-striped table-hover ">
+<tr><td>Reference Number</td><td><%= @sale.id %></td></tr>
+<tr><td>Sale Created</td><td><%= @sale.created_at.strftime("%d/%m/%Y %H:%M") %></td></tr>
+<tr><td>Updated At</td><td><%= @sale.updated_at.strftime("%d/%m/%Y %H:%M") %></td></tr>
+<tr><td>Sale Status</td><td><%= @sale.sale_status%></td></tr>
+<tr><td>Sale Price</td><td>$<%= @sale.amount%></td></tr>
+<% customer = Customer.find(@sale.customer_id) %>
+<tr><td>Customer Name</td><td><%= customer.first_name + " " + customer.last_name %></td></tr>
+<tr><td>Customer Address</td><td><%= customer.address %></td></tr>
+</table>
+<h3>Items purchased</h3>
+<table class="table table-striped table-hover ">
+                <thead>
+                  <tr>
+                    <th>Item purchased</th>
+                    <th>Item description</th>
+                    <th>Cost per item $</th>
+                    <th>Total cost $</th>
+                    <th>Customer name</th>
+                    <th>Customer address</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <% for sale_item in @sale.sale_items %>
+                    <% item = Item.find(sale_item.item_id)%>
+                    <tr>
+                      <td><%=sale_item.name%></td>
+                      <td><%=item.description%></td>
+                      <td><%=sale_item.price_per_item%></td>
+                      <td><%=sale_item.total_price%></td>
+                      <% customer = Customer.find(@sale.customer_id) %>
+                      <td><%= customer.first_name + " " + customer.last_name %></td>
+                      <td><%= customer.address %></td>
+                    </tr>
+                <% end %>
+                </tbody>
+</table>
+<br/>
+<% if @sale.sale_status == "Incomplete" then %><center><a href="/sale/complete/<%= @sale.id %>">Click here</a> to complete sale once the amount has been fully paid.</center><% end %>
+<center><button onclick="goBack()" class="btn btn-danger">Go Back</button></center>
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>

@@ -88,7 +88,7 @@
 </div>
 <br/><br/><br/>
 
-<table class="table table-striped table-hover ">
+<table id="items" class="sortable table table-striped table-hover ">
                 <thead>
                   <tr>
                     <th>Item Name</th>
@@ -238,3 +238,10 @@
 <% end %>
 </tbody>
 </table>
+<%= javascript_include_tag "tsorter.min.js" %>
+<script type="text/javascript">
+function init() {
+    var sorter = tsorter.create('items');
+}
+window.onload = init;
+</script>

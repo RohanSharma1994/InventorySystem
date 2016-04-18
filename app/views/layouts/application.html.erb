@@ -5,6 +5,15 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <style>
+  /* Up and Down Arrows */
+  .sortable th.descend:after{
+     content: "\25B2";
+   }
+  .sortable th.ascend:after{
+    content: "\25BC";
+  }
+  </style>
 </head>
 <body>
  <div class="navbar navbar-default navbar-fixed-top">
@@ -37,6 +46,7 @@
                 <li><a href="/item">Inventory Management</a></li>
                 <li><a href="/sale">Sales Management</a></li>
                 <li class="divider"></li>
+                <li><a href="/daybook">Daybook Format</a></li>
               </ul>
             </li>
           </ul>

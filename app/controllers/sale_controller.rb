@@ -6,6 +6,9 @@ class SaleController < ApplicationController
     @sale = Sale.new
     @customer = Customer.find(params[:customer_id])
     @sale.customer_id = params[:customer_id]  
+    @sale.transaction_type = params[:transaction_type]
+    @sale.deposit_amount = params[:deposit]
+    @sale.sale_status = params[:status]
     item_ids = params[:itemid]
     quantities = params[:quantity]
     amount = 0
@@ -17,7 +20,7 @@ class SaleController < ApplicationController
       item.quantity = item.quantity - Integer(quantities[i])
       item.save
       # Keep calculating the total amount for the sale 
-      amount = amount + item.price * (quantities[i].to_f)
+      amount = amount + item.retail_price * (quantities[i].to_f)
       saleItem = SaleItem.new 
       saleItem.name = item.name
       saleItem.quantity = quantities[i].to_i
@@ -56,4 +59,25 @@ class SaleController < ApplicationController
     # Render the page
     @sales = Sale.all
   end 
+
+  def view_sale
+    if (session['logged_in'] != 1) 
+      redirect_to url_for(:controller => :user, :action => :index_not_logged_in) and return
+    end
+    @sale = Sale.find(params[:id])
+    # Render appropriately
+  end
+
+  def complete_sale
+    if (session['logged_in'] != 1) 
+      redirect_to url_for(:controller => :user, :action => :index_not_logged_in) and return
+    end
+    @sale = Sale.find(params[:id])
+    @sale.sale_status = "Completed"
+    @sale.save
+    flash[:message] = "Sale with reference: #{@sale.id} was successfully completed."
+    redirect_to url_for(:controller => :sale, :action => :index) and return
+
+  end
+
 end

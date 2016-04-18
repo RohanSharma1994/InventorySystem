@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160222210116) do
+ActiveRecord::Schema.define(version: 20160418200146) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "customers", force: :cascade do |t|
     t.string   "first_name"
@@ -43,8 +46,8 @@ ActiveRecord::Schema.define(version: 20160222210116) do
     t.integer  "sale_id"
   end
 
-  add_index "items", ["customer_id"], name: "index_items_on_customer_id"
-  add_index "items", ["sale_id"], name: "index_items_on_sale_id"
+  add_index "items", ["customer_id"], name: "index_items_on_customer_id", using: :btree
+  add_index "items", ["sale_id"], name: "index_items_on_sale_id", using: :btree
 
   create_table "sale_items", force: :cascade do |t|
     t.string   "name"
@@ -57,16 +60,20 @@ ActiveRecord::Schema.define(version: 20160222210116) do
     t.integer  "sale_id"
   end
 
-  add_index "sale_items", ["sale_id"], name: "index_sale_items_on_sale_id"
+  add_index "sale_items", ["sale_id"], name: "index_sale_items_on_sale_id", using: :btree
 
   create_table "sales", force: :cascade do |t|
     t.integer  "customer_id"
     t.float    "amount"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.string   "transaction_type"
+    t.float    "deposit_amount"
+    t.string   "reference_number"
+    t.string   "sale_status"
   end
 
-  add_index "sales", ["customer_id"], name: "index_sales_on_customer_id"
+  add_index "sales", ["customer_id"], name: "index_sales_on_customer_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "username"
@@ -78,4 +85,8 @@ ActiveRecord::Schema.define(version: 20160222210116) do
     t.string   "admin"
   end
 
+  add_foreign_key "items", "customers"
+  add_foreign_key "items", "sales"
+  add_foreign_key "sale_items", "sales"
+  add_foreign_key "sales", "customers"
 end
