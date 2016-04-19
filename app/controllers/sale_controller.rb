@@ -80,4 +80,14 @@ class SaleController < ApplicationController
 
   end
 
+  def daybook
+    # Ensure the user is logged in 
+    if (session['logged_in'] != 1) 
+      redirect_to url_for(:controller => :user, :action => :index_not_logged_in) and return
+    end
+    # Get all the sales which have been completed 
+    @sales = Sale.where(sale_status: "Completed")
+    # Render appropriately
+  end
+
 end

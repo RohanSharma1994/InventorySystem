@@ -1,2 +1,48 @@
 <br/><br/><br/>
-<h3>Sales Daybook</h3>
+<center><h3>Sales Daybook (For All sales that have been completed)</h3></center>
+<!-- Only completed SALES will be entered into the daybook -->
+<table class="sortable table table-striped table-hover">
+<thead>
+<tr>
+	<th>Date</th>
+	<th>Reference Number</th>
+	<th>Customer</th>
+	<th>Customer Address</th>
+	<th>Item Name</th>
+	<th>Item Description</th>
+	<th>Item Number 1</th>
+	<th>Item Number 2</th>
+	<th>Retail Price</th>
+	<th>Quantity</th>
+	<th>Total Price</th>
+</tr>
+<% for sale in @sales do %>
+
+	<% for saleItem in SaleItem.where(sale_id: sale.id) do %>
+	<% item = Item.find(saleItem.item_id) %>
+	<tr>
+	<td><%= sale.updated_at.strftime("%d/%m/%Y %H:%M") %></td>
+	<td><a href="/sale/view/<%=sale.id%>"><%= sale.id %></a></td>
+	<!-- Find the customer who bought these items -->
+	<% customer = Customer.find(sale.customer_id) %>
+	<td><%= customer.first_name + " " + customer.last_name %></td>
+	<td><%= customer.address %></td>
+	<td><%= item.name %></td>
+	<td><%= item.description %></td>
+	<td><%= item.item_number_one %></td>
+	<td><%= item.item_number_two %></td>
+	<td><%= item.retail_price %></td>
+	<td><%= saleItem.quantity %></td>
+	<td><%= saleItem.quantity * item.retail_price %></td>
+	</tr>
+
+	<% end %>
+<% end %>
+</table>
+<%= javascript_include_tag "tsorter.min.js" %>
+<script type="text/javascript">
+function init() {
+    var sorter = tsorter.create('items');
+}
+window.onload = init;
+</script>
