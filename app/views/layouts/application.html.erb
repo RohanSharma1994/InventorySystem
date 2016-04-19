@@ -57,11 +57,12 @@
 
           </form>
           <% end %>
-             <form class="navbar-form navbar-right" role="search">
+             <form class="navbar-form navbar-right" role="search" action="/search" method="post">
                       <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                        <input type="text" class="form-control" placeholder="Search" name="query">
                       </div>
                       <button type="submit" class="btn btn-warning">Submit</button>
+                       <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
                     </form>
 
         </div>
